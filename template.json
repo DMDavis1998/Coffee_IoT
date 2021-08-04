@@ -9,7 +9,7 @@
         "licenseOwner": { "$choose" : {"from": [
             "Starbucks",
             "Aurora Grp",
-            "Catalina",
+            "Catalina Brewers",
             "United Bev",
             "SipHit",
             "Gourmavens",
