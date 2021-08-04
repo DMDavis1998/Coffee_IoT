@@ -1,0 +1,29 @@
+{
+  "name": "coffee_iot",
+  "version": "1.0.0",
+  "description": "Coffee IoT Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DMDavis1998/Coffee_IoT.git"
+  },
+  "keywords": [
+    "coffee",
+    "iot",
+    "mongodb"
+  ],
+  "author": "Don Davis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DMDavis1998/Coffee_IoT/issues"
+  },
+  "homepage": "https://github.com/DMDavis1998/Coffee_IoT#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "mgeneratejs": "^0.5.1",
+    "mongodb": "^4.1.0"
+  }
+}
