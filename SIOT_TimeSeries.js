@@ -155,6 +155,564 @@ db.dataTS_sec.aggregate([
 ]);
 
 
+db.vwTS_min__NoDeviceTypeWithBody.aggregate( [
+	{ $match: {
+		"body.body.Recipe.ParamCoffee.IsqExtrTime" : {"$gt": 0},
+		"body.body.Recipe.ParamCoffee.MaxValidExtrTime" : {"$ne":3600}, 
+		"body.body.Recipe.ParamCoffee.MinValidExtrTime" : {"$ne":-1 } 
+	}}
+]);
+
+db.vwTS_min__NoDeviceTypeWithBody.aggregate( [
+	{ $match: {
+		"body.body.Recipe.ParamCoffee.IsqExtrTime" : {"$gt": 0},
+		"body.body.Recipe.ParamCoffee.MaxValidExtrTime" : {"$ne":3600}, 
+		"body.body.Recipe.ParamCoffee.MinValidExtrTime" : {"$ne":-1 } 
+	}},
+	{
+	  $project:
+		{
+		  _id:			0,
+		  "fleet": 		{ $arrayElemAt: [ "$fleets", 0 ] },
+		  "timeField": 	1,
+		  "device_id":	"$metaField.device_id",
+		  "IsqExtrTime":		"$body.body.Recipe.ParamCoffee.IsqExtrTime",
+		  "MaxValidExtrTime":	"$body.body.Recipe.ParamCoffee.MaxValidExtrTime",
+		  "MinValidExtrTime":	"$body.body.Recipe.ParamCoffee.MinValidExtrTime"
+		}
+	},
+	{
+		$addFields: {
+			"GoodShot": {
+				$and: [
+					{$gte: ["$IsqExtrTime", "$MinValidExtrTime"]}, 
+					{$lte: ["$IsqExtrTime", "$MaxValidExtrTime"]}
+				]
+			}
+		  }
+	}
+]);
+
+db.createView(
+	"vwTS_min__GoodShotBadShot",
+	"vwTS_min__NoDeviceTypeWithBody",
+	[
+		{ $match: {
+			"body.body.Recipe.ParamCoffee.IsqExtrTime" : {"$gt": 0},
+			"body.body.Recipe.ParamCoffee.MaxValidExtrTime" : {"$ne":3600}, 
+			"body.body.Recipe.ParamCoffee.MinValidExtrTime" : {"$ne":-1 } 
+		}},
+		{
+		  $project:
+			{
+			  _id:			0,
+			  "fleet": 		{ $arrayElemAt: [ "$fleets", 0 ] },
+			  "timeField": 	1,
+			  "device_id":	"$metaField.device_id",
+			  "IsqExtrTime":		"$body.body.Recipe.ParamCoffee.IsqExtrTime",
+			  "MaxValidExtrTime":	"$body.body.Recipe.ParamCoffee.MaxValidExtrTime",
+			  "MinValidExtrTime":	"$body.body.Recipe.ParamCoffee.MinValidExtrTime"
+			}
+		},
+		{
+			$addFields: {
+				"GoodShotBool": {
+					$and: [
+						{$gte: ["$IsqExtrTime", "$MinValidExtrTime"]}, 
+						{$lte: ["$IsqExtrTime", "$MaxValidExtrTime"]}
+					]
+				}
+			  }
+		},
+		{
+			$addFields: {
+				"GoodShotNum": {
+					$switch:
+					{
+					branches: [
+						{
+						case: {$and: [
+							{$gte: ["$IsqExtrTime", "$MinValidExtrTime"]}, 
+							{$lte: ["$IsqExtrTime", "$MaxValidExtrTime"]}
+						]},
+						then: 1
+						},
+					],
+					default: 0
+					}
+				}
+		}}
+	]
+);
+
+
+{"body.type": "ProductResult", "body.body.id": "Espresso_Dark_Double_Regular_NotUpdosed_Undefined_Undefined"}
+{
+    "timeField": {
+        "$date": "2021-09-02T12:35:24.000Z"
+    },
+    "metaField": {
+        "device_id": "410007574",
+        "device_type": {
+            "$undefined": true
+        },
+        "em_id": "4000205 1301 000830 1953",
+        "message_type": "telemetry"
+    },
+    "device_id": "410007574",
+    "topic": "siot-hub",
+    "storeid": 7520,
+    "timezone": "America/New_York",
+    "store_id": 7520,
+    "em_id": "4000205 1301 000830 1953",
+    "fleets": ["CO", "CO-US"],
+    "message_id": "410007574:4000205 1301 000830 1953:2021-09-02T12:35:24.854Z",
+    "body": {
+        "body": {
+            "Recipe": {
+                "Category": "Espresso",
+                "ParamAmount": {
+                    "Module": "",
+                    "Name": "IngredientParametersAmount",
+                    "Temperature": -1,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ParamAutoOut": {
+                    "CupHeightMillimeters": 70,
+                    "CupIdentifier": "",
+                    "Module": "",
+                    "Name": "IngredientParametersAutoOutlet",
+                    "Valid": false
+                },
+                "ParamCoffee": {
+                    "Grinder1": {
+                        "Amount": 0,
+                        "Valid": false
+                    },
+                    "Grinder2": {
+                        "Amount": 14,
+                        "Valid": true
+                    },
+                    "Grinder3": {
+                        "Amount": 0,
+                        "Valid": false
+                    },
+                    "IsqExtrTime": 30,
+                    "IsqPuckThickn": 11.8,
+                    "MaxExtrTime": -1,
+                    "MaxValidExtrTime": 26,
+                    "MinValidExtrTime": 15,
+                    "Module": "",
+                    "Name": "Coffee",
+                    "NumBrewCycles": 1,
+                    "PostPress": 0,
+                    "PreBrew": 0,
+                    "PressFactor": 1,
+                    "RelaxTime": 0.1,
+                    "TotalAmount": 92,
+                    "UseExpChamber": true,
+                    "UseForISQ": true,
+                    "Valid": true
+                },
+                "ParamCoffeeGrind": {
+                    "Grinder1": {
+                        "Amount": 0,
+                        "Valid": false
+                    },
+                    "Grinder2": {
+                        "Amount": 0,
+                        "Valid": false
+                    },
+                    "Grinder3": {
+                        "Amount": 0,
+                        "Valid": false
+                    },
+                    "Module": "",
+                    "Valid": false
+                },
+                "ParamFlavor": {
+                    "CheckFlavorFrontDoorReed": true,
+                    "Flavor1": {
+                        "AmountSeconds": 0,
+                        "Valid": false
+                    },
+                    "Flavor2": {
+                        "AmountSeconds": 0,
+                        "Valid": false
+                    },
+                    "Flavor3": {
+                        "AmountSeconds": 0,
+                        "Valid": false
+                    },
+                    "Flavor4": {
+                        "AmountSeconds": 0,
+                        "Valid": false
+                    },
+                    "Module": "",
+                    "Name": "IngredientParametersFlavor",
+                    "Valid": false
+                },
+                "ParamMilk": {
+                    "MilkPhase1": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase10": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase2": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase3": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase4": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase5": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase6": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase7": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase8": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase9": {
+                        "AirAmount": 0,
+                        "Duration": 0,
+                        "PumpSpeed": 0,
+                        "Valid": false
+                    },
+                    "Module": "",
+                    "Name": "IngredientParametersMilk",
+                    "PureFoam": false,
+                    "Temperature": 0,
+                    "Valid": false
+                },
+                "ParamPowder": {
+                    "Module": "",
+                    "Name": "IngredientParametersPowder",
+                    "PowderAmountSeconds": 0,
+                    "PowderIntensity": 0,
+                    "Temperature": -1,
+                    "Valid": false
+                },
+                "ParamSteam": {
+                    "AutoOff": false,
+                    "Module": "",
+                    "Temperature": -1,
+                    "Valid": false
+                }
+            },
+            "Result": {
+                "ResultAmount": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultCoffee": {
+                    "BrewChamberIdx": 0,
+                    "BrewCycle1": {
+                        "ExtrTime": 16.787,
+                        "PuckThicknAfterPr": 16.3928,
+                        "PuckThicknAfterSq": 12.823400000000001,
+                        "Valid": true
+                    },
+                    "BrewCycle2": {
+                        "ExtrTime": 0,
+                        "PuckThicknAfterPr": 0,
+                        "PuckThicknAfterSq": 0,
+                        "Valid": false
+                    },
+                    "BrewCycle3": {
+                        "ExtrTime": 0,
+                        "PuckThicknAfterPr": 0,
+                        "PuckThicknAfterSq": 0,
+                        "Valid": false
+                    },
+                    "BrewCycle4": {
+                        "ExtrTime": 0,
+                        "PuckThicknAfterPr": 0,
+                        "PuckThicknAfterSq": 0,
+                        "Valid": false
+                    },
+                    "BrewCycle5": {
+                        "ExtrTime": 0,
+                        "PuckThicknAfterPr": 0,
+                        "PuckThicknAfterSq": 0,
+                        "Valid": false
+                    },
+                    "ErrorNo": 0,
+                    "Grinder1": {
+                        "Adjustment": 0,
+                        "CalibFactor": 0,
+                        "Duration": 0,
+                        "Rate": 0,
+                        "Valid": false
+                    },
+                    "Grinder2": {
+                        "Adjustment": 0,
+                        "CalibFactor": 70.6090339605,
+                        "Duration": 3.188795082087097,
+                        "Rate": 3.1,
+                        "Valid": true
+                    },
+                    "Grinder3": {
+                        "Adjustment": 0,
+                        "CalibFactor": 0,
+                        "Duration": 0,
+                        "Rate": 0,
+                        "Valid": false
+                    },
+                    "InletWaterCond": -1,
+                    "InletWaterTemp": -273.15,
+                    "Module": "CoffeeModule1",
+                    "Name": "Coffee",
+                    "NumBrewCycles": 1,
+                    "Success": true,
+                    "Valid": true,
+                    "WaterAmount": 93.42499999999905
+                },
+                "ResultCoffeeClean": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultCoffeeGrind": {
+                    "ErrorNo": 0,
+                    "Grinder1": {
+                        "Adjustment": 0,
+                        "CalibFactor": 0,
+                        "Duration": 0,
+                        "Rate": 0,
+                        "Valid": false
+                    },
+                    "Grinder2": {
+                        "Adjustment": 0,
+                        "CalibFactor": 0,
+                        "Duration": 0,
+                        "Rate": 0,
+                        "Valid": false
+                    },
+                    "Grinder3": {
+                        "Adjustment": 0,
+                        "CalibFactor": 0,
+                        "Duration": 0,
+                        "Rate": 0,
+                        "Valid": false
+                    },
+                    "Module": "",
+                    "Success": false,
+                    "Valid": false
+                },
+                "ResultCoffeeRinse1": {
+                    "ErrorNo": 0,
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultCoffeeRinse2": {
+                    "ErrorNo": 0,
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultFlavor": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false
+                },
+                "ResultMilk": {
+                    "ErrorNo": 0,
+                    "MilkPhase1": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase10": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase2": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase3": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase4": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase5": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase6": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase7": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase8": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "MilkPhase9": {
+                        "Duration": 0,
+                        "PumpSpeedRPM": 0,
+                        "Valid": false
+                    },
+                    "Module": "",
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultMilkClean": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Name": "",
+                    "Rinse1": {
+                        "Duration": 0,
+                        "Valid": false,
+                        "WaterAmount": 0
+                    },
+                    "Rinse2": {
+                        "Duration": 0,
+                        "Valid": false,
+                        "WaterAmount": 0
+                    },
+                    "Rinse3": {
+                        "Duration": 0,
+                        "Valid": false,
+                        "WaterAmount": 0
+                    },
+                    "Rinse4": {
+                        "Duration": 0,
+                        "Valid": false,
+                        "WaterAmount": 0
+                    },
+                    "Rinse5": {
+                        "Duration": 0,
+                        "Valid": false,
+                        "WaterAmount": 0
+                    },
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultMilkRinse": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultPowder": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultPowderClean": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultPowderRinse": {
+                    "ErrorNo": 0,
+                    "Module": "",
+                    "Name": "",
+                    "Success": false,
+                    "Valid": false,
+                    "WaterAmount": 0
+                },
+                "ResultSteam": {
+                    "AutoStop": false,
+                    "Duration": 0,
+                    "EndTemp": 0,
+                    "ErrorNo": 0,
+                    "ManualStop": false,
+                    "Module": "",
+                    "Success": false,
+                    "Valid": false
+                },
+                "Success": true
+            },
+            "articleno": 0,
+            "id": "Espresso_Dark_Double_Regular_NotUpdosed_Undefined_Undefined",
+            "name": "Dark Espresso (2 - -)",
+            "price": 0
+        },
+        "eventTime": "2021-09-02T08:35:24-04:00",
+        "eventTimeLocal": "2021-09-02T08:35:23",
+        "type": "ProductResult",
+        "version": "1.9.0"
+    },
+    "message_type": "telemetry",
+    "timestamp": "2021-09-02T12:35:24Z"
+}
+
+
+
 
 // Questios to answer
 - Mark: First and last heartbeat for a device
