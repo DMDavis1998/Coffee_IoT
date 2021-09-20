@@ -20,15 +20,15 @@ nohup bash convertToTS.sh > convertToTS.log &
 use siot_1day
 
 
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00000 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00001 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00002 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00003 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00004 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00005 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00006 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00007 --writeConcern 1 -j 4
-/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://snarvaez:snarvaez**@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00008 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00000 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00001 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00002 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00003 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00004 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00005 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00006 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00007 --writeConcern 1 -j 4
+/home/snarvaez/mongo50/bin/mongoimport --uri mongodb+srv://@siot-cluster.vbzlz.mongodb.net/siot_1day --collection data --type json --file ./part-00008 --writeConcern 1 -j 4
 
 
 
