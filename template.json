@@ -1,57 +1,12 @@
 {
-  "body": {
-    "body": {
-      "location": {
-        "countryCode": "$country",
-        "description": "$sentence",
-        "language": "en",
-        "timeZone": "$timezone",
-        "licenseOwner": { "$choose" : {"from": [
-            "Starbucks",
-            "Aurora Grp",
-            "Catalina",
-            "United Bev",
-            "SipHit",
-            "Gourmavens",
-            "Numaki",
-            "NutriTrek",
-            "AvaFresh",
-            "OyNom",
-            "Eco Hearty",
-            "Cuisine Services",
-            "Aroma Port",
-            "MiracleBev",
-            "Caterix",
-            "Misty Brew",
-            "Cerrani",
-            "EpiFresh",
-            "Yum Crew",
-            "Dave Mustaine"]}}
-      },
-      "modules": { "$array": { "of": 
-        {
-          "id": {"$string" : {"length" : 10, "alpha" : true, "casing" : "upper"}},
-          "name": { "$choose": { "from": ["Mechanics","Hydraulics","Steam"] }}
-        }, "number" : { "$number": { "min": 1, "max": 3}}
-      }},
-      "networkInterfaces": [
-        {
-          "address": "50:2D:F4:14:FC:BC",
-          "name": "eth0"
-        }
-      ],
-      "software": {
-        "version": "1.13.0-9-g83950b3"
-      }
-    },
-    "eventTime": "2019-11-03T04:49:01+01:00",
-    "eventTimeLocal": "2020-01-13T20:01:37",
-    "type": "MachineInfo",
-    "version": "1.9.0"
+  "ts": { "$date": "2021-04-17T01:45:00Z" },
+  "metadata": {
+    "appliance_id": "ABC000001"
   },
-  "em_id": "4000205 1901 002312 1922",
-  "device_id": {"$number":{ "min": 10000, "max": 11000 }},
-  "message_id": "410004988:4000205 1901 002312 1922:2019-11-03T03:49:01.934Z",
-  "message_type": "telemetry",
-  "timestamp": {"$date": { "min": "2021-08-01", "max": "2021-08-07"}}
+  "metric_name": "meteric2",
+  "value_upper": { "$number": { "min": 500, "max": 118200000}},
+  "param4": 1,
+  "value": { "$number": { "min": 500, "max": 500000}},
+  "value_lower": { "$number": { "min": 500, "max": 500000}},
+  "param1": 465800000
 }
